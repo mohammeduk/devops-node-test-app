@@ -4,9 +4,22 @@ required_plugins.each do |plugin|
 end
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/xenial64"
-  config.vm.synced_folder ".", "/home/ubuntu/app"
-  config.hostsupdater.aliases = ["development.local"]
-  config.vm.provision "shell", path: "environment/provision.sh", privileged: false
-  config.vm.network "private_network", ip: "192.168.10.100"
+  config.vm.define "web" do |web|
+    web.vm.box = "ubuntu/xenial64"
+    web.vm.hostname = "web"
+    web.vm.box_url = "ubuntu/xenial64"
+
+    web.vm.synced_folder ".", "/home/ubuntu/app"
+    web.hostsupdater.aliases = ["development.local"]
+    web.vm.provision "shell", path: "environment/provision.sh", privileged: false
+    web.vm.network "private_network", ip: "192.168.10.100"
+  end
+
+  config.vm.define "db" do |db|
+    db.vm.box = "ubuntu/xenial64"
+    db.vm.hostname = "db"
+    db.vm.box_url = "ubuntu/xenial64"
+    db.vm.network "private_network", ip: "192.168.10.101"
+  end
+
 end
