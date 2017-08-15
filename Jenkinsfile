@@ -28,7 +28,9 @@ node('master'){
 
             sh '''ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com << EOF
 	            cd app
-                ./environment/provision.sh
+                // ./environment/provision.sh
+                berks vendor cookbooks
+                sudo chef-client --local-mode --runlist 'recipe[node-server]'
 
                 // Setting the environment variable
                 export DB_HOST=mongodb://34.228.27.237/test
