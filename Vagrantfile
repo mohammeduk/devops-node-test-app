@@ -1,4 +1,4 @@
-required_plugins = ["vagrant-hostsupdater"]
+required_plugins = ["vagrant-hostsupdater", "vagrant-berkshelf"]
 required_plugins.each do |plugin|
   exec "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
 end
@@ -11,7 +11,11 @@ Vagrant.configure("2") do |config|
 
     web.vm.synced_folder ".", "/home/ubuntu/app"
     web.hostsupdater.aliases = ["development.local"]
-    web.vm.provision "shell", path: "environment/provision.sh", privileged: false
+    web.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = ['cookbooks']
+      chef.run_list = ['recipe[node-server::default]']
+    end
+    # web.vm.provision "shell", path: "environment/provision.sh", privileged: false
     web.vm.provision "shell" , inline: "echo 'export DB_HOST=mongodb://192.168.10.101/test' >> .bash_profile"
     web.vm.network "private_network", ip: "192.168.10.100"
   end
