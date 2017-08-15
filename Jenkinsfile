@@ -4,7 +4,7 @@ node('master'){
 
     stage('testing'){
         sshagent(['08ea6979-2a9c-4445-a8ce-d0cb8ee6da73']) {
-            sh 'ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com rm -rf app'
+            sh 'ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com sudo rm -rf app'
             sh 'scp -r . ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com:/home/ubuntu/app'
 
             sh '''ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com << EOF
@@ -23,7 +23,7 @@ node('master'){
 
     stage('deployent'){
         sshagent(['08ea6979-2a9c-4445-a8ce-d0cb8ee6da73']) {
-            sh 'ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com rm -rf app'
+            sh 'ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com sudo rm -rf app'
             sh 'scp -r . ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com:/home/ubuntu/app'
 
             sh '''ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com << EOF
