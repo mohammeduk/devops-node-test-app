@@ -8,7 +8,7 @@ node('master'){
             sh 'scp -r . ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com:/home/ubuntu/app'
 
             sh 'knife zero bootstrap ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com --ssh-user ubuntu --node-name production'
-            sh 'knife zero converge "name:testing" --ssh-user ubuntu --override-runlist rails-server'
+            sh 'knife zero converge "name:testing" --ssh-user ubuntu --override-runlist node-server'
 
             sh '''ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com << EOF
 	            cd app
@@ -30,7 +30,7 @@ node('master'){
             sh 'scp -r . ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com:/home/ubuntu/app'
 
             sh 'knife zero bootstrap ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com --ssh-user ubuntu --node-name production'
-            sh 'knife zero converge "name:production" --ssh-user ubuntu --override-runlist rails-server'
+            sh 'knife zero converge "name:production" --ssh-user ubuntu --override-runlist node-server'
 
 
             sh '''ssh -o "StrictHostKeyChecking=no" ubuntu@ec2-52-201-237-214.compute-1.amazonaws.com << EOF
