@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     web.vm.synced_folder ".", "/home/ubuntu/app"
     web.hostsupdater.aliases = ["development.local"]
     web.vm.provision "chef_solo" do |chef|
-      chef.cookbooks_path = ['cookbooks']
+      # chef.cookbooks_path = ['cookbooks']
       chef.run_list = ['recipe[node-server::default]']
     end
     # web.vm.provision "shell", path: "environment/provision.sh", privileged: false
@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
     db.vm.hostname = "db"
     db.vm.synced_folder "./environment", "/home/ubuntu/app/environment"
     db.vm.provision "chef_solo" do |chef|
-      chef.cookbooks_path = ['cookbooks']
+      # chef.cookbooks_path = ['cookbooks']
       chef.run_list = ['recipe[mongodb-server::default]']
     end
     # db.vm.provision "shell", path: "environment/provision_db.sh", privileged: false
