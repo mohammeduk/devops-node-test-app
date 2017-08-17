@@ -24,7 +24,11 @@ Vagrant.configure("2") do |config|
     db.vm.box = "ubuntu/xenial64"
     db.vm.hostname = "db"
     db.vm.synced_folder "./environment", "/home/ubuntu/app/environment"
-    db.vm.provision "shell", path: "environment/provision_db.sh", privileged: false
+    db.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = ['cookbooks']
+      chef.run_list = ['recipe[mongodb-server::default]']
+    end
+    # db.vm.provision "shell", path: "environment/provision_db.sh", privileged: false
     db.vm.network "private_network", ip: "192.168.10.101"
   end
 
